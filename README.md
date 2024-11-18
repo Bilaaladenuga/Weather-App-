@@ -1,6 +1,3 @@
-Here’s a sample GitHub README for your weather app project:
-
----
 
 # 🌦️ Weather App  
 
@@ -86,6 +83,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [OpenWeatherMap](https://openweathermap.org/) for the API.  
 - Inspiration from [Weather.com](https://weather.com/).  
 
----
-
-Feel free to tweak the text, replace placeholders, and add details specific to your app! Let me know if you need help with anything else. 😊  
