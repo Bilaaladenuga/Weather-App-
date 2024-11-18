@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+  </head>
+  <body
+    class="flex flex-col pt-5 px-3 h-full sm:px-[25%] overflow-x-hidden relative bg-cover bg-fixed bg-gradient-to-b from-[rgba(255,255,255,1)] to-[rgba(139,208,255,1)] dark:from-[rgba(2,0,36,1)] dark:via-[rgba(0,60,113,1)] dark:to-[rgba(0,87,129,1)]"
+  >
+    <header class="flex items-center gap-2 sm:gap-4">
+      <div class="flex-1">
+        <p
+          id="p-location-title"
+          class="text-lg sm:text-2xl sm:text-right font-bold text-center capitalize dark:text-white"
+        >
+          Lagos, NG
+        </p>
+        <div id="div-searchbox" class="relative hidden">
+          <input
+            class="peer shadow-inner h-9 text-base w-full rounded-[10px] pl-3 border-2 border-slate-400 border-solid appearance-none relative"
+            type="text"
+            name="input-search-location"
+            id="input-search-location"
+            autocomplete="off"
+            placeholder="Type the City name"
+          />
+          <span
+            id="span-search-enter"
+            class="absolute hidden top-[6px] left-[54px] text-slate-500 text-[0.5rem] peer-focus:flex peer-focus:items-center peer-focus:gap-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="#000000"
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" />
+              <path
+                fill="rgb(148 163 184 / 1)"
+                d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7h-2z"
+              />
+            </svg>
+            PRESS ENTER
+          </span>
+          <button
+            type="button"
+            id="button-option-current-location"
+            class="absolute pl-4 gap-1 w-full font-bold hidden h-9 z-40 top-10 bg-gray-100 border-2 border-gray-400 rounded-[10px] border-solid shadow-md peer-placeholder-shown:flex peer-placeholder-shown:items-center"
+          >
+            or Use my current location
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+              <path
+                d="M9.062 19.354V17.604Q6.458 17.312 4.552 15.417Q2.646 13.521 2.354 10.917H0.604V9.042H2.354Q2.646 6.438 4.552 4.521Q6.458 2.604 9.062 2.312V0.562H10.938V2.312Q13.542 2.604 15.448 4.521Q17.354 6.438 17.646 9.042H19.396V10.917H17.646Q17.354 13.521 15.448 15.417Q13.542 17.312 10.938 17.604V19.354ZM10.021 15.75Q12.479 15.75 14.146 14.083Q15.812 12.417 15.812 9.958Q15.812 7.5 14.146 5.833Q12.479 4.167 10.021 4.167Q7.562 4.167 5.896 5.833Q4.229 7.5 4.229 9.958Q4.229 12.417 5.896 14.083Q7.562 15.75 10.021 15.75ZM10.021 13.521Q8.562 13.521 7.51 12.469Q6.458 11.417 6.458 9.958Q6.458 8.5 7.51 7.448Q8.562 6.396 10.021 6.396Q11.479 6.396 12.531 7.448Q13.583 8.5 13.583 9.958Q13.583 11.417 12.531 12.469Q11.479 13.521 10.021 13.521ZM10.021 11.646Q10.688 11.646 11.198 11.135Q11.708 10.625 11.708 9.958Q11.708 9.292 11.198 8.781Q10.688 8.271 10.021 8.271Q9.354 8.271 8.844 8.781Q8.333 9.292 8.333 9.958Q8.333 10.625 8.844 11.135Q9.354 11.646 10.021 11.646ZM10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Q10.042 9.938 10.042 9.938Z"
+              />
+            </svg>
+          </button>
+          <button
+            class="absolute top-[5px] right-[5px]"
+            type="button"
+            id="button-header-search-close"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path
+                fill="#000000"
+                fill-rule="nonzero"
+                d="M5.146 5.146a.5.5 0 0 1 .708 0L12 11.293l6.146-6.147a.5.5 0 0 1 .638-.057l.07.057a.5.5 0 0 1 0 .708L12.707 12l6.147 6.146a.5.5 0 0 1 .057.638l-.057.07a.5.5 0 0 1-.708 0L12 12.707l-6.146 6.147a.5.5 0 0 1-.638.057l-.07-.057a.5.5 0 0 1 0-.708L11.293 12 5.146 5.854a.5.5 0 0 1-.057-.638z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-center gap-4">
+        <button
+          type="button"
+          id="button-search-open"
+          class="rounded-full bg-black p-1 text-white dark:bg-white dark:text-black"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            aria-hidden="true"
+          >
+            <path
+              d="M10.5 3a7.5 7.5 0 015.645 12.438l4.709 4.708a.502.502 0 01-.708.708l-4.708-4.709A7.5 7.5 0 1110.5 3zm0 1a6.5 6.5 0 100 13 6.5 6.5 0 000-13z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </button>
+        <button
+          type="button"
+          id="button-change-metrics"
+          class="flex justify-center items-center rounded-full h-8 w-8 font-light text-xl leading-none bg-black text-white dark:bg-white dark:text-black"
+        >
+          C°
+        </button>
+      </div>
+    </header>
+    <main class="mt-4 sm:mt-9 flex-1">
+      <div class="flex justify-center items-center mb-1">
+        <div class="tabs flex relative bg-white p-3 rounded-full">
+          <input type="radio" id="radio-1" name="tabs" checked class="z-10" />
+          <label class="tab z-10" for="radio-1">Now</label>
+          <input type="radio" id="radio-2" name="tabs" class="z-10" />
+          <label class="tab z-10" for="radio-2">7 Day Forecast</label>
+          <span class="glider"></span>
+        </div>
+      </div>
+
+      <div id="div-tab-content-radio-1" class="flex flex-col gap-8">
+        <div class="flex flex-col gap-4">
+          <p id="p-fetched-time" class="text-center sm:mt-5 dark:text-white">
+            Friday Apr 29, 1:06pm
+          </p>
+          <div
+            class="grid grid-cols-2 grid-rows-[1fr_auto_auto] gap-x-4 gap-y-4 sm:gap-y-0 sm:grid-rows-2 sm:grid-cols-8"
+          >
+            <div
+              class="flex flex-col justify-center items-center mb-2 sm:col-start-1 sm:col-end-5 sm:row-start-1 sm:row-end-2"
+            >
+              <p
+                id="p-today-temperature"
+                class="text-6xl font-extrabold flex-1 flex items-center justify-center dark:text-white"
+              >
+                20C°
+              </p>
+              <div class="flex justify-center items-center gap-8">
+                <div>
+                  <div class="flex justify-center items-center">
+                    <img
+                      src=""
+                      alt=""
+                      id="img-today-min-temp"
+                      class="h-6 w-auto"
+                    />
+                    <p id="p-today-min-temp" class="text-sm dark:text-white">
+                      18C°
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-center items-center">
+                    <p id="p-today-max-temp" class="text-sm dark:text-white">
+                      21C°
+                    </p>
+                    <img
+                      src=""
+                      alt=""
+                      id="img-today-max-temp"
+                      class="h-6 w-auto"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex flex-col justify-center items-center mb-2 sm:col-start-5 sm:col-end-9 sm:row-start-1 sm:row-end-2"
+            >
+              <div class="h-auto w-20">
+                <img src="" alt="" id="img-today-summary-image" class="w-32" />
+                <!-- <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 64 64"
+                >
+                  <defs>
+                    <linearGradient
+                      id="b"
+                      x1="13.58"
+                      x2="24.15"
+                      y1="15.57"
+                      y2="33.87"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stop-color="#86c3db" />
+                      <stop offset=".45" stop-color="#86c3db" />
+                      <stop offset="1" stop-color="#5eafcf" />
+                      <animateTransform
+                        attributeName="gradientTransform"
+                        dur="10s"
+                        repeatCount="indefinite"
+                        type="rotate"
+                        values="10 19.22 24.293; -10 19.22 24.293; 10 19.22 24.293"
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="c"
+                      x1="22.56"
+                      x2="39.2"
+                      y1="21.96"
+                      y2="50.8"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stop-color="#f3f7fe" />
+                      <stop offset=".45" stop-color="#f3f7fe" />
+                      <stop offset="1" stop-color="#deeafb" />
+                    </linearGradient>
+                    <linearGradient
+                      id="a"
+                      x1="22.53"
+                      x2="25.47"
+                      y1="42.95"
+                      y2="48.05"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stop-color="#4286ee" />
+                      <stop offset=".45" stop-color="#4286ee" />
+                      <stop offset="1" stop-color="#0950bc" />
+                    </linearGradient>
+                    <linearGradient
+                      id="d"
+                      x1="29.53"
+                      x2="32.47"
+                      y1="42.95"
+                      y2="48.05"
+                      xlink:href="#a"
+                    />
+                    <linearGradient
+                      id="e"
+                      x1="36.53"
+                      x2="39.47"
+                      y1="42.95"
+                      y2="48.05"
+                      xlink:href="#a"
+                    />
+                  </defs>
+                  <path
+                    fill="url(#b)"
+                    stroke="#72b9d5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width=".5"
+                    d="M29.33 26.68a10.61 10.61 0 01-10.68-10.54A10.5 10.5 0 0119 13.5a10.54 10.54 0 1011.5 13.11 11.48 11.48 0 01-1.17.07z"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      dur="10s"
+                      repeatCount="indefinite"
+                      type="rotate"
+                      values="-10 19.22 24.293; 10 19.22 24.293; -10 19.22 24.293"
+                    />
+                  </path>
+                  <path
+                    fill="url(#c)"
+                    stroke="#e6effc"
+                    stroke-miterlimit="10"
+                    stroke-width=".5"
+                    d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"
+                  />
+                  <path
+                    fill="none"
+                    stroke="url(#a)"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                    d="M24.39 43.03l-.78 4.94"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      dur="0.7s"
+                      repeatCount="indefinite"
+                      type="translate"
+                      values="1 -5; -2 10"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      dur="0.7s"
+                      repeatCount="indefinite"
+                      values="0;1;1;0"
+                    />
+                  </path>
+                  <path
+                    fill="none"
+                    stroke="url(#d)"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                    d="M31.39 43.03l-.78 4.94"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      begin="-0.4s"
+                      dur="0.7s"
+                      repeatCount="indefinite"
+                      type="translate"
+                      values="1 -5; -2 10"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      begin="-0.4s"
+                      dur="0.7s"
+                      repeatCount="indefinite"
+                      values="0;1;1;0"
+                    />
+                  </path>
+                  <path
+                    fill="none"
+                    stroke="url(#e)"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="2"
+                    d="M38.39 43.03l-.78 4.94"
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      begin="-0.2s"
+                      dur="0.7s"
+                      repeatCount="indefinite"
+                      type="translate"
+                      values="1 -5; -2 10"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      begin="-0.2s"
+                      dur="0.7s"
+                      repeatCount="indefinite"
+                      values="0;1;1;0"
+                    />
+                  </path>
+                </svg> -->
+              </div>
+              <p
+                id="p-today-summary-description"
+                class="text-base font-bold text-center dark:text-white"
+              >
+                Scattered Clouds
+              </p>
+            </div>
+            <div
+              class="div-widged-container sm:col-start-1 sm:col-end-3 sm:row-start-2 sm:row-end-3"
+            >
+              <img src="" alt="" id="img-today-feelslike" />
+              <div class="div-widget-container-main">
+                <p id="p-today-feelslike-tittle" class="p-wigdet-title">
+                  Feels Like
+                </p>
+                <p id="p-today-feelslike-temperature" class="p-widget-data">
+                  19C°
+                </p>
+              </div>
+            </div>
+            <div
+              class="div-widged-container sm:col-start-3 sm:col-end-5 sm:row-start-2 sm:row-end-3"
+            >
+              <img src="" alt="" id="img-today-humidity" />
+              <div class="div-widget-container-main">
+                <p id="p-today-humidity-tittle" class="p-wigdet-title">
+                  Humidity
+                </p>
+                <p id="p-today-humidity-temperature" class="p-widget-data">
+                  80%
+                </p>
+              </div>
+            </div>
+            <div
+              class="div-widged-container sm:col-start-5 sm:col-end-7 sm:row-start-2 sm:row-end-3"
+            >
+              <img src="" alt="" id="img-today-chanceofrain" />
+              <div class="div-widget-container-main">
+                <p
+                  id="p-today-chanceofrain-tittle"
+                  class="p-wigdet-title whitespace-nowrap"
+                >
+                  Chance of Rain
+                </p>
+                <p id="p-today-chanceofrain-temperature" class="p-widget-data">
+                  13%
+                </p>
+              </div>
+            </div>
+            <div
+              class="div-widged-container sm:col-start-7 sm:col-end-9 sm:row-start-2 sm:row-end-3"
+            >
+              <img src="" alt="" id="img-today-windspeed" />
+              <div class="div-widget-container-main">
+                <p id="p-today-windspeed-tittle" class="p-wigdet-title">
+                  Wind Speed
+                </p>
+                <p id="p-today-windspeed-temperature" class="p-widget-data">
+                  2m/s
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-6">
+          <h2 class="text-xl sm:text-2xl font-bold text-center dark:text-white">
+            24 Hours Forecast
+          </h2>
+          <ul
+            id="ul-24hf-list"
+            class="flex items-center sm:grid sm:grid-cols-3 gap-5 p-4 pt-1 overflow-auto"
+          >
+            <template id="tmp-24hf-list-item">
+              <li
+                class="flex flex-col sm:flex-row justify-center items-center gap-3 w-16 sm:w-auto flex-shrink-0"
+              >
+                <div
+                  class="flex justify-center items-center gap-1 flex-1 sm:flex-initial"
+                >
+                  <p
+                    class="p-24hf-item-tomorrow text-xs text-gray-600 dark:text-white"
+                  ></p>
+                  <p
+                    class="p-24hf-item-time flex-1 whitespace-nowrap dark:text-white"
+                  ></p>
+                </div>
+                <p
+                  class="p-24hf-item-temperature font-bold dark:text-white"
+                ></p>
+                <img class="img-24hf-item-weather-image w-11 h-auto" />
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+      <div
+        id="div-tab-content-radio-2"
+        class="flex flex-col items-center sm:mt-5 hidden"
+      >
+        <div
+          class="grid grid-cols-[40px_80px_60px_65px_65px] items-center justify-items-center"
+        >
+          <p class="text-2xl font-bold col-start-2 col-end-3 dark:text-white">
+            C°
+          </p>
+          <img
+            id="img-7df-header-sunrise-image"
+            src=""
+            alt=""
+            class="w-14 h-auto col-start-4 col-end-5"
+          />
+          <img
+            id="img-7df-header-sunset-image"
+            src=""
+            alt=""
+            class="w-14 h-auto col-start-5 col-end-6"
+          />
+        </div>
+        <ul id="ul-7df-list" class="flex flex-col gap-4">
+          <template id="tmp-7df-list">
+            <li class="grid grid-cols-[40px_80px_60px_65px_65px]">
+              <p
+                class="p-7df-item-dayname flex items-center dark:text-white"
+              ></p>
+              <div class="flex justify-center items-center">
+                <p
+                  class="p-7df-item-temperature text-2xl font-bold dark:text-white"
+                ></p>
+                <div class="flex flex-col justify-center items-center">
+                  <div class="flex">
+                    <img class="img-7df-temp-min w-3 h-auto" />
+                    <p
+                      class="p-7df-item-temperature-min text-sm dark:text-white"
+                    ></p>
+                  </div>
+                  <div class="flex">
+                    <img class="img-7df-temp-max w-3 h-auto" />
+                    <p
+                      class="p-7df-item-temperature-max text-sm dark:text-white"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-center">
+                <img class="img-24hf-item-weather-image w-12 h-auto" />
+              </div>
+
+              <p
+                class="p-7df-item-sunrise text-center whitespace-nowrap flex items-center justify-center dark:text-white"
+              ></p>
+              <p
+                class="p-7df-item-sunset text-center whitespace-nowrap flex items-center justify-center dark:text-white"
+              ></p>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </main>
+    <footer class="w-full mt-5 sm:pb-4">
+      <div
+        class="flex items-center justify-center gap-2 text-white p-1 text-sm"
+      >
+        <span class="text-black dark:text-white"
+          >Created by Bidmaj Empire       <p>&copy; 2023 Bidmaj global. All rights reserved.</p>
+          <strong
+            ><a
+              id="link-footer"
+              target="_blank"
+           
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 30 30"
+            width="30px"
+            height="30px"
+          >
+            <path
+              d="M15,3C8.373,3,3,8.373,3,15c0,5.623,3.872,10.328,9.092,11.63C12.036,26.468,12,26.28,12,26.047v-2.051c-0.487,0-1.303,0-1.508,0c-0.821,0-1.551-0.353-1.905-1.009c-0.393-0.729-0.461-1.844-1.435-2.526c-0.289-0.227-0.069-0.486,0.264-0.451c0.615,0.174,1.125,0.596,1.605,1.222c0.478,0.627,0.703,0.769,1.596,0.769c0.433,0,1.081-0.025,1.691-0.121c0.328-0.833,0.895-1.6,1.588-1.962c-3.996-0.411-5.903-2.399-5.903-5.098c0-1.162,0.495-2.286,1.336-3.233C9.053,10.647,8.706,8.73,9.435,8c1.798,0,2.885,1.166,3.146,1.481C13.477,9.174,14.461,9,15.495,9c1.036,0,2.024,0.174,2.922,0.483C18.675,9.17,19.763,8,21.565,8c0.732,0.731,0.381,2.656,0.102,3.594c0.836,0.945,1.328,2.066,1.328,3.226c0,2.697-1.904,4.684-5.894,5.097C18.199,20.49,19,22.1,19,23.313v2.734c0,0.104-0.023,0.179-0.035,0.268C23.641,24.676,27,20.236,27,15C27,8.373,21.627,3,15,3z"
+            />
+          </svg>
+        </a>
+      </div>
+    </footer>
+    <div
+      id="div-shade-loading"
+      class="absolute top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 hidden"
+    >
+      <div class="w-20 h-auto">
+        <svg
+          version="1.1"
+          id="L7"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 100 100"
+          enable-background="new 0 0 100 100"
+          xml:space="preserve"
+        >
+          <path
+            fill="#ffffff"
+            d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+       c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              dur="2s"
+              from="0 50 50"
+              to="360 50 50"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </path>
+          <path
+            fill="#ffffff"
+            d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+       c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              dur="1s"
+              from="0 50 50"
+              to="-360 50 50"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </path>
+          <path
+            fill="#ffffff"
+            d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+       L82,35.7z"
+          >
+            <animateTransform
+              attributeName="transform"
+              attributeType="XML"
+              type="rotate"
+              dur="2s"
+              from="0 50 50"
+              to="360 50 50"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </path>
+        </svg>
+      </div>
+    </div>
+    <script src="./bundle.js"></script>
+  </body>
+</html>
